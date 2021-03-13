@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
-import md5 from 'md5';
 import user from '../img/user.png';
 import swal from 'sweetalert';
 
 const url = "https://shrouded-coast-79182.herokuapp.com/new";
-const url2 = "https://shrouded-coast-79182.herokuapp.com/new";
 
 const cookies = new Cookies();
 let enBase64 = '';

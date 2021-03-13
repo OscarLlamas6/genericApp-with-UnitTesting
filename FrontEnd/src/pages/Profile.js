@@ -13,13 +13,7 @@ import AnimalAvatar from 'animal-avatars.js'
 
 const cookiess = new Cookies();
 const Surl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/editarUsuario";
-const Aurl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/getAlbumes";
-const Curl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/newAlbum";
-const Eurl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/deleteAlbum";
-const urlUsuario = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/usuarioId";
-const urlFoto = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/obtenerFoto";
-const url3 = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/subirFoto";
-const url4 = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/guardarFotoPerfil";
+
 
 let enBase64 = '';
 let imagen = user;
