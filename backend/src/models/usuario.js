@@ -5,7 +5,7 @@ const usuarioSchema = new Schema({
     apellido: { type : String , required : true},
     username: { type : String , unique : true, required : true},
     password: { type : String , required : true},
-    image: { data: Buffer, contentType: String }
+    image: { type: String }
 });
 
 module.exports = model('Usuario', usuarioSchema);
