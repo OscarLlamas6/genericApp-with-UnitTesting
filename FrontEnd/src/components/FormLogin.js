@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import user1 from '../img/user.png';
 import axios from 'axios';
-import md5 from 'md5';
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
 
-const Surl ="http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/login2";
+const Surl ="https://shrouded-coast-79182.herokuapp.com/login";
 const cookiess = new Cookies();
 
 export default class FormLogin extends Component {
@@ -14,8 +13,8 @@ export default class FormLogin extends Component {
         //hereda los componentes de react
         super();
         this.state = {
-            userName: '',
-            contra: ''
+            username: '',
+            password: ''
         }
     }
 
@@ -26,24 +25,30 @@ export default class FormLogin extends Component {
         }
     }
 
-    IniciarSesion=async()=>{
-        //aplicamos MD5 a la contraseña al enviarla.
-        // { this.state }
-        axios.post(Surl,{userName: this.state.userName, contra: md5(this.state.contra)})
+    prueba=async()=>{
+        axios.get(Surl)
         .then(response=>{
-            if(response.data == "vacio"){
-                console.log("vacio")
+            console.log(response.data)
+        })
+        .catch(error=>{
+            console.error(error)
+        })
+    }
+
+    IniciarSesion=async()=>{
+        axios.post(Surl, {username: this.state.username, password: this.state.password})
+        .then(response=>{
+            console.log(response.data)
+            if(response.status != 202){
                 swal({
                     title: "Error",
-                    text: "El usuario no existe.",
+                    text: "Error al iniciar sesion.",
                     icon: "info",
                     button: "Aceptar",
                 });
             }else{
-                //SI retorna un usuario entonces verificamos la contraseña.
-                //mostramos el usuario que devuelve
-                let cEntra = response.data.Item.contra;
-                let contraL = md5(this.state.contra);
+                let cEntra = response.data.password;
+                let contraL = this.state.password;
                 if(cEntra != contraL){
                     swal({
                         title: "Error",
@@ -53,13 +58,14 @@ export default class FormLogin extends Component {
                     });
                 }else{
                     console.log("Credenciales correctas.");
-                    console.log(response.data.Item);
+                    console.log(response.data);
                     //variable de sesion con universal cookies.
-                    var usuario = response.data.Item;
-                    cookiess.set('userName', usuario.userName, {path: "/"});
+                    var usuario = response.data;
+                    cookiess.set('username', usuario.username, {path: "/"});
                     cookiess.set('nombre', usuario.nombre, {path: "/"});
                     cookiess.set('apellido', usuario.apellido, {path: "/"});
-                    cookiess.set('contra', usuario.contra, {path: "/"});
+                    cookiess.set('password', usuario.password, {path: "/"});
+                    cookiess.set('image', usuario.image, {path: "/"});
                     swal({
                         title: "Bienvenid@",
                         text: ":) Credenciales correctas.",
@@ -74,13 +80,13 @@ export default class FormLogin extends Component {
         })
         .catch(error=>{
             console.error(error)
-            swal({
+            /*swal({
                 title: "Ocurrio algo",
                 text: "No existe el usuario.",
                 icon: "error",
                 button: "Aceptar"
-            });
-            setTimeout("location.href='./'", 2000);
+            });*/
+            //setTimeout("location.href='./'", 2000);
         })
     }
 
@@ -88,7 +94,8 @@ export default class FormLogin extends Component {
     //hago el submit y obtengo los datos metiendolos en el state
     _handleSubmit = (e) =>{
         e.preventDefault()
-        this.IniciarSesion();
+        //this.prueba();
+        this.IniciarSesion()
     }
 
 
@@ -111,11 +118,11 @@ export default class FormLogin extends Component {
                     <form onSubmit={this._handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="uUsuario" className="form-label">Usuario</label>
-                            <input onChange={e => this.setState({userName: e.target.value})} type="text" className="form-control" id="uUsuario" placeholder="Usuario" />
+                            <input onChange={e => this.setState({username: e.target.value})} type="text" className="form-control" id="username" placeholder="Usuario" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="uContra" className="form-label">Contraseña</label>
-                            <input onChange={e => this.setState({contra: e.target.value})} type="password" className="form-control" id="uContra" placeholder="Contraseña"/>
+                            <input onChange={e => this.setState({password: e.target.value})} type="password" className="form-control" id="password" placeholder="Contraseña"/>
                         </div>
                         <button type="submit" className="btn btn-dark">Iniciar Sesión</button>
                         </form>

@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
-import md5 from 'md5';
 import user from '../img/user.png';
 import swal from 'sweetalert';
 
-const url = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/register";
-const url2 = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/todos2";
-const url3 = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/subirFoto";
-const url4 = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/guardarFotoPerfil";
+const url = "https://shrouded-coast-79182.herokuapp.com/new";
+
 const cookies = new Cookies();
 let enBase64 = '';
 let imagen = user;
@@ -34,8 +31,6 @@ export default class FormularioRegistro extends Component{
     Comprobacion(){
         if(this.state.userName != '' && this.state.name != ''  && this.state.lastName != '' && this.state.contra != '' && this.state.contra2 != '' && this.state.foto != ''){
             if(this.state.contra == this.state.contra2){
-                //guardar foto
-                //this.state.foto = 'url'
                 this.Registrar();
             }else{
                 swal({
@@ -56,25 +51,10 @@ export default class FormularioRegistro extends Component{
     }
 
     Registrar=async()=>{
-        this.Usuarios();
-        let nuevo = this.state.userName;
         let existe = 0;
-        for(let i=0; i < this.state.usuarios.length; i++){
-            let ver = this.state.usuarios[i].userName;
-            if(ver == nuevo){
-                existe = 1;
-                break;
-            }
-        }
-        console.log("va a registrar");
+        console.log(this.state)
         if(existe == 0){
-            console.log("no existe");
-            var fechahora = new Date();
-            var fecha = fechahora.getDate() + '-' + (fechahora.getMonth() + 1) + '-' + fechahora.getFullYear();
-            var hora = fechahora.getHours() + ':' + fechahora.getMinutes() + ':' + fechahora.getSeconds();
-            FechaHora = fecha + '_' + hora;
-            console.log(FechaHora);
-            axios.post(url, {userName: this.state.userName, nombre: this.state.name, apellido: this.state.lastName, contra: md5(this.state.contra), foto: 'Fotos_Perfil/' + this.state.userName + '_' + FechaHora + '.' + ext})
+            axios.post(url, {username: this.state.userName, nombre: this.state.name, apellido: this.state.lastName, password: this.state.contra, image: enBase64})
             .then(response=>{
                 console.log('response');
                 console.log(response.data);
@@ -86,9 +66,7 @@ export default class FormularioRegistro extends Component{
                         icon: "error",
                         button: "Aceptar"
                     });
-                }else if(response.data == "success"){
-                    //guardar foto de perfil
-                    this.GuardarFoto();
+                }else if(response.data.message == "Usuario registrado :)"){   
                     console.log("El usuario fue registrado");
                     swal({
                         title: "Registrado",
@@ -100,15 +78,6 @@ export default class FormularioRegistro extends Component{
                         window.location.href="./"
                         //swal(`The returned value is: ${value}`);
                       });
-                    //alert("El usuario fue registrado");
-                    //cookies
-                    /*var usuario = response.data.Item;
-                    cookies.set('userName', usuario.userName, {path: "/"});
-                    cookies.set('nombre', usuario.name, {path: "/"});
-                    cookies.set('apellido', usuario.lastName, {path: "/"});
-                    cookies.set('contra', usuario.contra, {path: "/"});
-                    alert(`Bienvenido ${usuario.name}.`);*/
-                    //window.location.href="./"//"./profile"
                 }
             })
             .catch(error=>{
@@ -125,52 +94,6 @@ export default class FormularioRegistro extends Component{
         }
     }
 
-    Usuarios=async()=>{
-        axios.get(url2)
-        .then(response=>{
-            console.log(response.data);
-            const users = (response.data).Items;
-            console.log(users);
-            this.setState({
-                usuarios: users
-            });
-            console.log(this.state.usuarios);
-        })
-        .catch(error=>{
-            console.log('error')
-        })
-    }
-
-    GuardarFoto=async()=>{
-        console.log('guardar foto');
-        axios.post(url3, {nombreImagen: FechaHora, imagenBase64: this.state.foto, extension: ext, userName: this.state.userName})
-        .then(response=>{
-            console.log('response.data');
-            console.log(response.data);
-            if (response.data == "correcto"){
-                console.log('foto guardada');
-                this.GuardarFotoenBD();
-            }else{
-                console.log('error al guardar la foto');
-            }
-        })
-        .catch(error=>{
-            console.log("error")
-        })
-    }
-
-    GuardarFotoenBD=async()=>{
-        console.log('guardar foto en tabla');
-        axios.post(url4, {idFoto: this.state.userName + '_' + FechaHora + '.' + ext, idUser: this.state.userName, ubicacion: 'Fotos_Perfil/' + this.state.userName + '_' + FechaHora + '.' + ext})
-        .then(response=>{
-            if(response.data == "success"){
-                console.log('foto guardada en la tabla');
-            }else{
-                console.log('error al guardar foto en tabla');
-            }
-        })
-    }
-
     render(){
         const convertirBase64=(archivos)=>{
             Array.from(archivos).forEach(archivo=>{
@@ -183,12 +106,6 @@ export default class FormularioRegistro extends Component{
                     console.log("a base 64");
                     console.log(imagen);
                     aux = base64.split(',');
-                    //console.log(aux[1]);
-                   // this.state.foto = base64;
-                    //console.log("state.foto");
-                    //console.log(this.state.foto);
-                    //this.state.foto = base64
-                    //this.setState({foto: aux[1]})
                     enBase64 = aux[1];
                     console.log(enBase64);
                     var aux2, aux3 = [];
@@ -254,16 +171,8 @@ export default class FormularioRegistro extends Component{
         e.preventDefault();
         console.log('oprimio registarse');
         this.state.foto = enBase64;
-        //console.log(this.state.foto);
-        //console.log(this.state.userName);
         this.Comprobacion();
         console.log('registro')
-        //alert("registrando");
-        //<img src={`data:image/png;base64,${enBase64}`} />
-        
-        //<div className="user-img-def">
-        //<img src={`${imagen}`} />
-    //</div>
     }
 
     

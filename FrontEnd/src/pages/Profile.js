@@ -13,13 +13,7 @@ import AnimalAvatar from 'animal-avatars.js'
 
 const cookiess = new Cookies();
 const Surl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/editarUsuario";
-const Aurl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/getAlbumes";
-const Curl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/newAlbum";
-const Eurl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/deleteAlbum";
-const urlUsuario = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/usuarioId";
-const urlFoto = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/obtenerFoto";
-const url3 = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/subirFoto";
-const url4 = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/guardarFotoPerfil";
+
 
 let enBase64 = '';
 let imagen = user;
@@ -91,11 +85,11 @@ export default class Profile extends Component {
     }
 
     componentDidMount(){
-        /*if(!cookiess.get('userName')){
+        if(!cookiess.get('username')){
             window.location.href='./';
         }
-        this.ObtenerAlbum();
-        this.Usuario();*/
+        //this.ObtenerAlbum();
+        //this.Usuario();
     }
 
 
@@ -142,9 +136,10 @@ export default class Profile extends Component {
 
     render() {
 
-        let usuario = cookiess.get("userName");
+        let usuario = cookiess.get("username");
         let nombre = cookiess.get("nombre");
         let apellido = cookiess.get("apellido");
+        let foto = cookiess.get("image")
         
         return (
             <div>
@@ -156,11 +151,12 @@ export default class Profile extends Component {
                 <div className="card text-center">
                     <div className="col1">
                         <div className="marco1">
-                        <img  className="fotoPerfil" src="https://tododiscord.com/wp-content/uploads/rana.png"></img>
+                        <img  className="fotoPerfil" src={foto}></img>
                         </div>
                     </div>
                     <div className="usuario">
-                    <h2>Usuario Ejemplo</h2>
+                    <h2>@{usuario}</h2>
+                    <h4>{nombre} {apellido}</h4>
                     </div>
                     <div className="salto"></div>
                     <div className="salto"></div>
