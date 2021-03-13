@@ -152,6 +152,34 @@ router.post("/nuevaPublicacion", async (req, res) => {
     
 });
 
+router.get('/getPublicaciones', async (req, res) => {
+    
+    try {
+
+        await Publicacion.find({}, function (err, publicaciones) {
+            
+            if (err){ 
+                console.log(err)
+                res.status(404);
+                res.send({ message : err }); 
+                console.log("Error al obtener publicaciones :c");
+            } else{ 
+                res.status(202);
+                console.log("Publicaciones obtenidas correctamente :D")
+                res.json(publicaciones);              
+            } 
+
+        });
+        
+    } catch (error) {
+        console.log(error)
+        res.status(404);
+        res.send({ message : error });
+        console.log("Error al obtener publicaciones :c");
+    }
+
+});
+
 
 
 module.exports = router; 
