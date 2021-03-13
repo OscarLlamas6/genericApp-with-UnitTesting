@@ -131,7 +131,7 @@ router.post("/nuevaPublicacion", async (req, res) => {
 
         }
 
-        const date = new Date();
+        let date = new Date().toISOString().split('T')[0];
 
         await Publicacion.create({
             nombre: data.nombre,
