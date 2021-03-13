@@ -7,6 +7,7 @@ const { Router } = require('express');
 const { Mongoose } = require('mongoose');
 const router = Router();
 const Usuario = require('../models/usuario');
+const Publicacion = require('../models/publicacion');
 var uuid = require('uuid');
 
 
@@ -95,6 +96,54 @@ router.post("/new", async (req, res) => {
             } 
         });
         
+    } catch (error) {
+        console.log(error)
+        res.status(404);
+        res.send({ message : error });
+    }
+    
+});
+
+router.post("/nuevaPublicacion", async (req, res) => {
+
+    try {
+        const data = req.body;
+
+        var result = "";
+
+        if (data.image.toString() != ""){
+
+            var nombrei = "fotos/" + uuid() + ".jpg";
+        
+            //se convierte la base64 a bytes
+            let buff = new Buffer.from(data.image, 'base64');
+            
+            const params = {
+                Bucket: "practica2-ayd1",
+                Key: nombrei,
+                Body: buff,
+                ContentType: "image",
+                ACL: 'public-read'
+            };
+            s3.putObject(params).promise();
+
+            result = `https://practica2-ayd1.s3.us-east-2.amazonaws.com/` + nombrei;
+
+        }
+
+        const date = new Date();
+
+        await Publicacion.create({
+            nombre: data.nombre,
+            apellido: data.apellido,
+            username: data.username,
+            contenido: data.contenido,
+            fecha: date.toString(),
+            image: result.toString(),
+        }); 
+        res.status(202);
+        res.json({ message : 'Publicacion registrada :)'});
+
     } catch (error) {
         console.log(error)
         res.status(404);
