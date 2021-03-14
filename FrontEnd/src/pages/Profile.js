@@ -10,9 +10,11 @@ import swal from 'sweetalert';
 import { timers } from 'jquery';
 import user from '../img/user.png';
 import AnimalAvatar from 'animal-avatars.js'
+import Tarjeta from '../components/Tarjeta';
 
 const cookiess = new Cookies();
 const Surl = "https://shrouded-coast-79182.herokuapp.com/nuevaPublicacion";
+const Purl = "https://shrouded-coast-79182.herokuapp.com/getPublicaciones";
 
 
 let enBase64 = '';
@@ -32,7 +34,7 @@ export default class Profile extends Component {
         album:{
         crearAlbum: '',
         },
-        Albumes: [],
+        publicacionesT: [],
         miFoto: ''
     };
 
@@ -82,6 +84,7 @@ export default class Profile extends Component {
         if(!cookiess.get('username')){
             window.location.href='./';
         }
+        this.obtenerPublicaciones()
     }
 
 
@@ -113,6 +116,19 @@ export default class Profile extends Component {
             });
         })
     }
+
+    obtenerPublicaciones=async()=>{
+        axios.get(Purl)
+        .then(response=>{
+            const pbl = response.data
+            this.setState({
+                publicacionesT: pbl
+            });
+        })
+        .catch(error=>{
+            console.error("error");
+        })
+    }
   
 
     render() {
@@ -138,7 +154,16 @@ export default class Profile extends Component {
                 }
             })
         }
-        
+
+
+        var pp = this.state.publicacionesT.map(tarjeta => {
+            return (
+            <div key={tarjeta.id}>
+                <Tarjeta usuario={tarjeta.username} imagenPublicacion={tarjeta.image} contenido={tarjeta.contenido} fecha={tarjeta.fecha}/>
+            </div>
+            )
+        });
+
         return (
             <div>
                 <>
@@ -168,34 +193,7 @@ export default class Profile extends Component {
                 <div className="publicaciones">
                 <div className="salto"></div>
                     <div className="container">
-                        <div className="col2">
-                                <p><b>Fecha:10/03/2021 Hora: 15:50</b> { nombre } { apellido}</p>
-                                <p>Publicación de Ejemplo</p>
-                        </div>
-                    </div>
-                    <div className="container">
-                        <div className="col2">
-                                <p><b>Fecha:10/03/2021 Hora: 15:50</b> { nombre } { apellido}</p>
-                                <p>Publicación de Ejemplo</p>
-                        </div>
-                    </div>
-                    <div className="container">
-                        <div className="col2">
-                                <p><b>Fecha:10/03/2021 Hora: 15:50</b> { nombre } { apellido}</p>
-                                <p>Publicación de Ejemplo</p>
-                        </div>
-                    </div>
-                    <div className="container">
-                        <div className="col2">
-                                <p><b>Fecha:10/03/2021 Hora: 15:50</b> { nombre } { apellido}</p>
-                                <p>Publicación de Ejemplo</p>
-                        </div>
-                    </div>
-                    <div className="container">
-                        <div className="col2">
-                                <p><b>Fecha:10/03/2021 Hora: 15:50</b> { nombre } { apellido}</p>
-                                <p>Publicación de Ejemplo</p>
-                        </div>
+                        {pp}
                     </div>
                 </div>
                 </div>
