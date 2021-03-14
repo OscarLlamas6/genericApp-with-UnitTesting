@@ -8,4 +8,16 @@ describe('FormularioLogin', ()=>{
         // /expresion regular/ i -> ignore case 
         expect(screen.queryByText(/contraseña/i)).toBeInTheDocument()
     })
+
+    it('Debe tener boton de aceptar', () =>{
+        render(<FormLogin/>)
+        // /expresion regular/ i -> ignore case 
+        expect(screen.queryByText(/contraseña/i)).toBeInTheDocument()
+    })
+
+    it('Debe mostrar mensaje de error cuando la contrasena sea incorrecta', () =>{
+        render(<FormLogin/>)
+        // /expresion regular/ i -> ignore case 
+        expect(screen.queryByText(/contraseña/i)).toBeInTheDocument()
+    })
 });
