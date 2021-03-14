@@ -87,27 +87,21 @@ export default class Profile extends Component {
 
     //EDITAR PERFIL
     PublicarEstado=async()=>{
+        console.log(cookiess.get("nombre"))
+        console.log(cookiess.get("apellido"))
+        console.log(cookiess.get("username"))
+        console.log(this.state.form.publi)
+        console.log(enBase64)
         axios.post(Surl,{username: cookiess.get("username"), nombre: cookiess.get("nombre"), apellido: cookiess.get("apellido"), contenido: this.state.form.publi, image: enBase64})
         .then(response=>{
-            if(response.data == "Nel"){
-                swal({
-                    title: "Error",
-                    text: "No se pudo crear la publicacíon.",
-                    icon: "error",
-                    button: "Aceptar"
-                });
-                this.modaEditarEstado();
-            }else{
-                swal({
-                    title: "Publicacíon",
-                    text: "Se creo la publicación correctamente.",
-                    icon: "success",
-                    button: "Aceptar",
-                    timer: "2000"
-                });
-                cookiess.set('userName', cookiess.get("userName"), {path: "/"});
-                setTimeout('document.location.reload()',2000);  
-            }
+            swal({
+                title: "Publicacíon",
+                text: "Se creo la publicación correctamente.",
+                icon: "success",
+                button: "Aceptar",
+                timer: "2000"
+            });
+            setTimeout('document.location.reload()',2000);  
         })
         .catch(error=>{
             console.error("error");
@@ -122,6 +116,11 @@ export default class Profile extends Component {
   
 
     render() {
+
+        let usuario = cookiess.get("username");
+        let nombre = cookiess.get("nombre");
+        let apellido = cookiess.get("apellido");
+        let foto = cookiess.get("image")
 
         const convertirBase64=(archivos)=>{
             Array.from(archivos).forEach(archivo=>{
@@ -139,12 +138,6 @@ export default class Profile extends Component {
                 }
             })
         }
-
-
-        let usuario = cookiess.get("username");
-        let nombre = cookiess.get("nombre");
-        let apellido = cookiess.get("apellido");
-        let foto = cookiess.get("image")
         
         return (
             <div>
