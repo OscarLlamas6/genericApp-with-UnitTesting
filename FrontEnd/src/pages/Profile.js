@@ -12,13 +12,11 @@ import user from '../img/user.png';
 import AnimalAvatar from 'animal-avatars.js'
 
 const cookiess = new Cookies();
-const Surl = "http://p1-2127715980.us-east-2.elb.amazonaws.com:9000/editarUsuario";
+const Surl = "https://shrouded-coast-79182.herokuapp.com/nuevaPublicacion";
 
 
 let enBase64 = '';
 let imagen = user;
-let ext = '';
-let FechaHora = '';
 
 export default class Profile extends Component {
     
@@ -29,12 +27,8 @@ export default class Profile extends Component {
         form:{
             userName: '',
             publi: '',
-            fecha: '',
-            hora: ''
-        },
-        eliminar:{
-            seleccionado: '',
-        },
+            image: ''
+        }, 
         album:{
         crearAlbum: '',
         },
@@ -88,19 +82,12 @@ export default class Profile extends Component {
         if(!cookiess.get('username')){
             window.location.href='./';
         }
-        //this.ObtenerAlbum();
-        //this.Usuario();
     }
 
 
     //EDITAR PERFIL
     PublicarEstado=async()=>{
-
-        var fechahora = new Date();
-        var fechaA = fechahora.getDate() + '-' + (fechahora.getMonth() + 1) + '-' + fechahora.getFullYear();
-        var horaA = fechahora.getHours() + ':' + fechahora.getMinutes() + ':' + fechahora.getSeconds();
-        
-        axios.post(Surl,{userName: cookiess.get("userName"), publi: this.state.form.publi, fecha: fechaA, hora: horaA})
+        axios.post(Surl,{username: cookiess.get("username"), nombre: cookiess.get("nombre"), apellido: cookiess.get("apellido"), contenido: this.state.form.publi, image: enBase64})
         .then(response=>{
             if(response.data == "Nel"){
                 swal({
@@ -135,6 +122,24 @@ export default class Profile extends Component {
   
 
     render() {
+
+        const convertirBase64=(archivos)=>{
+            Array.from(archivos).forEach(archivo=>{
+                var reader = new FileReader();
+                reader.readAsDataURL(archivo);
+                reader.onload=function(){
+                    var aux=[];
+                    var base64 = reader.result;
+                    imagen = base64;
+                    aux = base64.split(',');
+                    enBase64 = aux[1];
+                    var aux2, aux3 = [];
+                    aux2 =aux[0].split('/');
+                    aux3 = aux2[1].split(';');
+                }
+            })
+        }
+
 
         let usuario = cookiess.get("username");
         let nombre = cookiess.get("nombre");
@@ -215,6 +220,7 @@ export default class Profile extends Component {
                                         <label htmlFor="userNombre">Publicación</label>
                                         <textarea className="form-control" rows="5" name="publi" id="publi" placeholder="¿En que estas pensando?..." cols="52" onChange={this.handleChange}></textarea>
                                         <br></br>
+                                        <input type="file"  accept="image/png, image/jpeg" multiple onChange={(e)=>convertirBase64(e.target.files)}></input>   
                                     </div>
                             </div>
                             </div>
