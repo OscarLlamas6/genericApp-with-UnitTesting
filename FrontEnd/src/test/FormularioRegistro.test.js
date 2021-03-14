@@ -11,14 +11,20 @@ describe('Que esten todos los campos necesarios', ()=>{
         expect(screen.queryByText(/nombre/i)).toBeInTheDocument();
         expect(screen.queryByText(/apellido/i)).toBeInTheDocument();
     })
+
     it('Debe tener contrasena y confirmacion contrasena', () =>{
         render(<FormularioRegistro/>)
 
         expect(screen.queryByText(/confirmar contraseña/i)).toBeInTheDocument()
     })
+
+    it('Debe tener boton de Registrarse', () =>{
+        render(<FormularioRegistro/>)
+
+        expect(screen.getByRole('button', {name: /Registrarse/i})).toBeInTheDocument();
+    })
 });
 
-//TODO: probar si corre sin describe:
 describe('Validacion de campos', ()=>{
     it('Que rechace campos no validos', () =>{
 
@@ -36,6 +42,7 @@ describe('Validacion de campos', ()=>{
         let result = dummyFormulario.ComprobacionYMensaje();
         expect(!result).toBeTruthy();
     });
+
     it('Que acepte campos validos', () =>{
         let dummyFormulario = new FormularioRegistro();
         dummyFormulario.state = {
