@@ -54,50 +54,6 @@ export default class FormularioRegistro extends Component{
         return true;
     }
 
-    Registrar=async()=>{
-        let existe = 0;
-        console.log(this.state)
-        if(existe == 0){
-            axios.post(url, {username: this.state.userName, nombre: this.state.name, apellido: this.state.lastName, password: this.state.contra, image: enBase64})
-            .then(response=>{
-                console.log('response');
-                console.log(response.data);
-                if(response.data == "error"){
-                    console.log("error al registrarse");
-                    swal({
-                        title: "Error",
-                        text: "Error al registrarse",
-                        icon: "error",
-                        button: "Aceptar"
-                    });
-                }else if(response.data.message == "Usuario registrado :)"){   
-                    console.log("El usuario fue registrado");
-                    swal({
-                        title: "Registrado",
-                        text: "Registrado correctamente",
-                        icon: "success",
-                        button: "Aceptar"
-                    })
-                    .then((value) => {
-                        window.location.href="./"
-                        //swal(`The returned value is: ${value}`);
-                      });
-                }
-            })
-            .catch(error=>{
-                console.log("ERROR")
-            })
-        }else{
-            swal({
-                title: "Error",
-                text: "El nombre de usuario esta ocupado",
-                icon: "error",
-                button: "Aceptar"
-            });
-            console.log('el usuario ya existe');
-        }
-    }
-
     render(){
         const convertirBase64=(archivos)=>{
             Array.from(archivos).forEach(archivo=>{
@@ -170,13 +126,56 @@ export default class FormularioRegistro extends Component{
 
     }
 
-    _handleSubmit = (e) =>{
+    _handleSubmit = async(e) =>{
         e.preventDefault();
         console.log('oprimio registarse');
         this.state.foto = enBase64;
         if(this.ComprobacionYMensaje()){
             console.log('registro')
-            this.Registrar();
+
+            {// Registrar usuario
+                let existe = 0;
+                console.log(this.state)
+                if(existe == 0){
+                    axios.post(url, {username: this.state.userName, nombre: this.state.name, apellido: this.state.lastName, password: this.state.contra, image: enBase64})
+                    .then(response=>{
+                        console.log('response');
+                        console.log(response.data);
+                        if(response.data == "error"){
+                            console.log("error al registrarse");
+                            swal({
+                                title: "Error",
+                                text: "Error al registrarse",
+                                icon: "error",
+                                button: "Aceptar"
+                            });
+                        }else if(response.data.message == "Usuario registrado :)"){   
+                            console.log("El usuario fue registrado");
+                            swal({
+                                title: "Registrado",
+                                text: "Registrado correctamente",
+                                icon: "success",
+                                button: "Aceptar"
+                            })
+                            .then((value) => {
+                                window.location.href="./"
+                                //swal(`The returned value is: ${value}`);
+                            });
+                        }
+                    })
+                    .catch(error=>{
+                        console.log("ERROR")
+                    })
+                }else{
+                    swal({
+                        title: "Error",
+                        text: "El nombre de usuario esta ocupado",
+                        icon: "error",
+                        button: "Aceptar"
+                    });
+                    console.log('el usuario ya existe');
+                }
+            }
         }
     }
 
