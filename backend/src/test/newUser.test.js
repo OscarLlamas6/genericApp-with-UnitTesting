@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 chai.use(chaiHttp);
 const url= 'https://shrouded-coast-79182.herokuapp.com';
 
-describe('test login endopoint: ',()=>{
+describe('test login endpoint: ',()=>{
     it('should login', (done) => {
     chai.request(url)
     .post('/new')
