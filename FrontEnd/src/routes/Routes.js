@@ -4,6 +4,7 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Login from '../pages/Login'
 import Profile from '../pages/Profile';
 import Registo from '../pages/Registro';
+import Publicaciones from '../pages/Publicaciones';
 
 
 //rutas creadas LOGIN
@@ -13,7 +14,7 @@ function Routes(){
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={Login}/>
-                <Route exact path="/profile" component={Profile}/>
+                <Route exact path="/profile" component={Publicaciones}/>
                 <Route exact path="/register" component={Registo}/>
             </Switch>
         </BrowserRouter>
