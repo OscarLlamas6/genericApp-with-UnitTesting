@@ -1,0 +1,32 @@
+.card-img-top{
+    height: 150px;
+    width: 15px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0);
+}
+
+.card-deck {
+    align-items: center;
+    display: flex;
+    width: 600px;
+}
+.salto{
+    height: 20px;
+}
+
+.form-control{
+    margin-top: 20px;
+}
+
+.btn-info{
+    margin-left: 45%;
+}
+
+.Publicaciones{
+    background: rgb(6, 6, 14);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 38%, rgba(0,212,255,1) 92%);
+    height: 100vh;
+    font-family: 'Oxygen', sans-serif;
+
+}
