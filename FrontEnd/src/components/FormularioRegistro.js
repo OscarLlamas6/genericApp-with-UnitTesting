@@ -28,26 +28,30 @@ export default class FormularioRegistro extends Component{
         }
     //}
 
-    Comprobacion(){
-        if(this.state.userName != '' && this.state.name != ''  && this.state.lastName != '' && this.state.contra != '' && this.state.contra2 != '' && this.state.foto != ''){
-            if(this.state.contra == this.state.contra2){
-                this.Registrar();
-            }else{
-                swal({
-                    title: "Error",
-                    text: "La contraseña no coincide",
-                    icon: "error",
-                    button: "Aceptar"
-                });
-            }
-        }else{
+    // Retorna false y muestra un swal informando que datos estan erroneos/incompletos. 
+    // Retorna true si los datos son validos
+    ComprobacionYMensaje(){
+        if(this.state.userName == '' || this.state.name == ''  || this.state.lastName == '' || this.state.contra == '' || this.state.contra2 == '' || this.state.foto == ''){
             swal({
                 title: "Error",
                 text: "Llenar todos los campos",
                 icon: "error",
                 button: "Aceptar"
             });
+            return false;
         }
+
+        if(this.state.contra != this.state.contra2){
+            swal({
+                title: "error",
+                text: "la contraseña no coincide",
+                icon: "error",
+                button: "aceptar"
+            });
+            return false;
+        }
+        
+        return true;
     }
 
     Registrar=async()=>{
@@ -166,13 +170,14 @@ export default class FormularioRegistro extends Component{
 
     }
 
-
     _handleSubmit = (e) =>{
         e.preventDefault();
         console.log('oprimio registarse');
         this.state.foto = enBase64;
-        this.Comprobacion();
-        console.log('registro')
+        if(this.ComprobacionYMensaje()){
+            console.log('registro')
+            this.Registrar();
+        }
     }
 
     
