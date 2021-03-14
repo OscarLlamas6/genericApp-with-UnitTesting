@@ -113,7 +113,7 @@ export default class FormLogin extends Component {
             <div className="col-sm-8 cuadro-central">
                 <div className="modal-content">
                     <div className="col-12 user-img">
-                        <img src={user1}></img>
+                        <img alt="userDefault" src={user1}></img>
                     </div>
                     <form onSubmit={this._handleSubmit}>
                         <div className="mb-3">

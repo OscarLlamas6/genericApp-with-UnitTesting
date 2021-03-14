@@ -9,15 +9,31 @@ describe('FormularioLogin', ()=>{
         expect(screen.queryByText(/contraseña/i)).toBeInTheDocument()
     })
 
-    it('Debe tener boton de aceptar', () =>{
+    it('Debe tener boton de iniciar sesion', () =>{
         render(<FormLogin/>)
-        // /expresion regular/ i -> ignore case 
-        expect(screen.queryByText(/contraseña/i)).toBeInTheDocument()
+
+        // console.log(
+        //     screen.getByRole(
+        //         'button', 
+        //         {
+        //             name: /iniciar sesión/i
+        //         }
+        //     )
+        // );
+
+        expect(
+            screen.getByRole(
+                'button', 
+                {
+                    name: /iniciar sesión/i
+                }
+            )
+        ).toBeInTheDocument();
     })
 
-    it('Debe mostrar mensaje de error cuando la contrasena sea incorrecta', () =>{
-        render(<FormLogin/>)
+    it('Debe mostart imagen de perfil default', () =>{
+        let a = render(<FormLogin/>)
         // /expresion regular/ i -> ignore case 
-        expect(screen.queryByText(/contraseña/i)).toBeInTheDocument()
+        expect(screen.queryByAltText(/userDefault/i)).toBeInTheDocument()
     })
 });
