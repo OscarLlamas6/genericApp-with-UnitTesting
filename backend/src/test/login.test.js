@@ -17,3 +17,17 @@ describe('test login endpoint: ',()=>{
     });
     });
    });
+
+
+   describe('test login endpoint: ',()=>{
+    it('should login', (done) => {
+    chai.request(url)
+    .post('/login')
+    .send({username: "201602621", password: "111111"})
+    .end( function(err,res){
+    console.log(res.body)
+    expect(res).to.have.status(404);
+    done();
+    });
+    });
+   });
