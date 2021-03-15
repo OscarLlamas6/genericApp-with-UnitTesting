@@ -13,11 +13,28 @@
 |201408549| Elba María Álvarez Domínguez|
 
 ## Tabla de Contenido
-- [Conceptos Básicos](#conceptos-basicos)
-- [Herramientas Utilizadas](#herramientas-utilizadas)
-- [Pruebas Unitarias Realizadas](#pruebas-unitarias-realizadas)
-- [Anexos](#anexos)
-- [Referencia Bibliográfica](#referencia-bibliografica)
+- [Práctica 2](#práctica-2)
+  - [Tabla de Contenido](#tabla-de-contenido)
+  - [Conceptos Básicos](#conceptos-básicos)
+      - [Pruebas Unitarias](#pruebas-unitarias)
+      - [Estructura de las Pruebas Unitarias](#estructura-de-las-pruebas-unitarias)
+  - [Herramientas Utilizadas](#herramientas-utilizadas)
+      - [Mocha](#mocha)
+      - [Chai](#chai)
+      - [Chai-Http](#chai-http)
+      - [Testing-Library / React](#testing-library--react)
+  - [Pruebas Unitarias Realizadas](#pruebas-unitarias-realizadas)
+  - [#### Backend](#-backend)
+    - [Frontend](#frontend)
+      - [Pruebas realizadas en Jest con react, estas pruebas fueron creadas con el objetivo de observar el correcto funcionamiento de la pagina.](#pruebas-realizadas-en-jest-con-react-estas-pruebas-fueron-creadas-con-el-objetivo-de-observar-el-correcto-funcionamiento-de-la-pagina)
+  - [Anexos](#anexos)
+    - [Capturas de pantalla de la aplicación.](#capturas-de-pantalla-de-la-aplicación)
+      - [**Pantalla login**](#pantalla-login)
+      - [**Pantalla perfil de usuario y datos.**](#pantalla-perfil-de-usuario-y-datos)
+      - [**Modal para crear una publicación**](#modal-para-crear-una-publicación)
+      - [**Visualizar publicaciones**](#visualizar-publicaciones)
+      - [**Pantalla registro**](#pantalla-registro)
+  - [Referencia Bibliográfica](#referencia-bibliográfica)
 
 ## Conceptos Básicos
 #### Pruebas Unitarias
@@ -345,9 +362,189 @@ describe('get all post: ',()=>{
 </tr>
 </table>
 
-#### Frontend
+### Frontend
+
+#### Pruebas realizadas en Jest con react, estas pruebas fueron creadas con el objetivo de observar el correcto funcionamiento de la pagina.
+
+<table>
+<tr>
+<td>
+
+  ```js
+describe('FormularioLogin', ()=>{
+    it('Debe de existir el texto para el campo contraseña', () =>{
+        render(<FormLogin/>)
+        expect(screen.queryByText(/contraseña/i)).toBeInTheDocument()
+    })
+
+    it('Debe tener boton de iniciar sesion', () =>{
+        render(<FormLogin/>)
+        expect(
+            screen.getByRole(
+                'button', 
+                {
+                    name: /iniciar sesión/i
+                }
+            )
+        ).toBeInTheDocument();
+    })
+
+    it('Debe mostart imagen de perfil default', () =>{
+        let a = render(<FormLogin/>)
+        // /expresion regular/ i -> ignore case 
+        expect(screen.queryByAltText(/userDefault/i)).toBeInTheDocument()
+    })
+});
+  ```
+</td>
+</tr>
+
+<tr>
+<td>
+
+  ```js
+describe('Que esten todos los campos necesarios', ()=>{
+    it('Debe tener datos personales', () =>{
+        expect(true);
+        render(<FormularioRegistro/>);
+
+        expect(screen.queryByText(/usuario/i)).toBeInTheDocument();
+        expect(screen.queryByText(/nombre/i)).toBeInTheDocument();
+        expect(screen.queryByText(/apellido/i)).toBeInTheDocument();
+    })
+
+    it('Debe tener contrasena y confirmacion contrasena', () =>{
+        render(<FormularioRegistro/>)
+
+        expect(screen.queryByText(/confirmar contraseña/i)).toBeInTheDocument()
+    })
+
+    it('Debe tener boton de Registrarse', () =>{
+        render(<FormularioRegistro/>)
+
+        expect(screen.getByRole('button', {name: /Registrarse/i})).toBeInTheDocument();
+    })
+});
+  ```
+</td>
+</tr>
+
+<tr>
+<td>
+
+  ```js
+
+describe('Validacion de campos', ()=>{
+    it('Que rechace campos no validos', () =>{
+
+        let dummyFormulario = new FormularioRegistro();
+        dummyFormulario.state = {
+            userName: '',
+            name: '',
+            lastName: '',
+            contra: '',
+            contra2: '',
+            foto: "",
+            usuarios: []
+        };
+
+        let result = dummyFormulario.ComprobacionYMensaje();
+        expect(!result).toBeTruthy();
+    });
+
+    it('Que acepte campos validos', () =>{
+        let dummyFormulario = new FormularioRegistro();
+        dummyFormulario.state = {
+            userName: 'valido',
+            name: 'valido',
+            lastName: 'valido',
+            contra: 'contraValida',
+            contra2: 'contraValida',
+            // chapuz:
+            foto: "any",
+            usuarios: []
+        }
+
+        let result = dummyFormulario.ComprobacionYMensaje();
+        expect(result).toBeTruthy();
+    });
+});
+  ```
+</td>
+</tr>
+
+<tr>
+<td>
+
+  ```js
+describe('Debe aparecer el titulo principal en la pagina', ()=>{
+    it('Debe tener el titulo analisis', () =>{
+        expect(true);
+        render(<Menu/>);
+
+        expect(screen.queryByText(/analisis/i)).toBeInTheDocument();
+    })
+    it('Debe tener el titulo diseño', () =>{
+        expect(true);
+        render(<Menu/>);
+
+        expect(screen.queryByText(/diseño/i)).toBeInTheDocument();
+    })
+});
+  ```
+</td>
+</tr>
+
+<tr>
+<td>
+
+  ```js
+describe('Validacion de campos', ()=>{
+    it('Las cookies tengan datos.', () =>{
+
+        let perfil = new Profile();
+        perfil.state = {
+            username: '',
+            nombre: '',
+            apellido: '',
+            publi: '',
+        };
+    });
+
+    it('Existir boton para crear publicacion', () =>{
+        expect(true);
+        render(<Profile/>);
+        expect(screen.queryByText(/Crear Publicación/i)).toBeInTheDocument();
+    })
+});
+  ```
+</td>
+</tr>
+</table>
+
+- - -
 
 ## Anexos
+### Capturas de pantalla de la aplicación.
+
+#### **Pantalla login**
+<img src="imagenes\1.PNG">
+
+#### **Pantalla perfil de usuario y datos.**
+<img src="imagenes\2.PNG">
+
+#### **Modal para crear una publicación**
+<img src="imagenes\3.PNG">
+
+#### **Visualizar publicaciones**
+<img src="imagenes\4.PNG">
+
+#### **Pantalla registro**
+<img src="imagenes\5.PNG">
+
+
+
+- - -
 
 ## Referencia Bibliográfica
 
