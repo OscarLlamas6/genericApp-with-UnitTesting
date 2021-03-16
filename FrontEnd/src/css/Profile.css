@@ -1,0 +1,110 @@
+.container-lg{
+    height: 40vmax;
+}
+
+.salto{
+    height: 20px;
+}
+
+.col1{
+    align-items: center;
+    padding-top: 50px;
+    background: #58D3F7;
+}
+
+.col2{
+    align-items: center;
+    align-self: center;
+    width: 35%;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    border-radius: 25px;
+    border-color: black;
+    box-shadow:0px 0px 2px black;
+}
+
+.marco1 {
+    padding: 10px;
+    align-items: center;
+    background-color: white;
+    width: 200px;
+    height: 200px;
+    margin-bottom: -75px;
+    margin-left: 450px;
+    border-radius: 50%;
+    text-align: justify;
+ }
+
+.fotoPerfil{
+    height: 175px;
+    width: 175px;
+    border-radius: 50%;
+    border: 1px solid black;
+    text-align: justify;
+}
+
+.fotoPerfil2{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0);
+}
+
+.texto{
+    text-align: center;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.div_img{
+    position: relative;
+    margin: 0px;
+    padding: 10px;
+    width: 150px;
+    height: 45px;
+    background-color:#3eb4d8;
+    border-radius: 5px;
+    box-shadow: 0px 1px 0px #1d6a81;
+
+}
+
+.btn_subir{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.publicaciones{
+    background-image: url('https://i.pinimg.com/originals/ec/cf/ed/eccfedacc5763b84232070d675151f80.jpg'); 
+    width: 100; 
+    height: 100;
+
+}
+
+.usuario{
+    padding-top: 75px;
+}
+
+.contenedor {
+    display: flex;
+    width: 600px;
+    background-color: #DDF58C;
+}
+
+.inBlanco{
+    color: white;
+}
+
+.elemento {
+    background-color: #67C3E6;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
