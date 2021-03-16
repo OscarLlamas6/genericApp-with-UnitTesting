@@ -2,7 +2,7 @@
 
 > Análisis y Diseño de Sistemas 1
 
-> Integrantes
+> Integrantes (Grupo 5)
 
 |Carné | Nombre |
 |----|----|
@@ -11,6 +11,8 @@
 |201601469| Oscar Eduardo Mazariegos López|
 |201612383| Javier Antonio Álvarez González|
 |201408549| Elba María Álvarez Domínguez|
+
+- [Enlace a repositorio en GitHub](https://github.com/OscarLlamas6/practica2-g5)
 
 ## Tabla de Contenido
 - [Práctica 2](#práctica-2)
@@ -24,9 +26,9 @@
       - [Chai-Http](#chai-http)
       - [Testing-Library / React](#testing-library--react)
   - [Pruebas Unitarias Realizadas](#pruebas-unitarias-realizadas)
-  - [#### Backend](#-backend)
+    - [Backend](#backend)
     - [Frontend](#frontend)
-      - [Pruebas realizadas en Jest con react, estas pruebas fueron creadas con el objetivo de observar el correcto funcionamiento de la pagina.](#pruebas-realizadas-en-jest-con-react-estas-pruebas-fueron-creadas-con-el-objetivo-de-observar-el-correcto-funcionamiento-de-la-pagina)
+       - [Pruebas realizadas en Jest con react, estas pruebas fueron creadas con el objetivo de observar el correcto funcionamiento de la pagina.](#pruebas-realizadas-en-jest-con-react-estas-pruebas-fueron-creadas-con-el-objetivo-de-observar-el-correcto-funcionamiento-de-la-pagina)
   - [Anexos](#anexos)
     - [Capturas de pantalla de la aplicación.](#capturas-de-pantalla-de-la-aplicación)
       - [**Pantalla login**](#pantalla-login)
@@ -78,8 +80,8 @@ Testing Library es un set de utilidades de testing simple y completo que promuev
 <tr>
 <td>
 
-  ```js
-  router.post('/login', async (req, res) => {
+```js
+router.post('/login', async (req, res) => {
 
     try {
 
@@ -107,7 +109,7 @@ Testing Library es un set de utilidades de testing simple y completo que promuev
     }
 
 });
-  ```
+```
 </td>
 <td>
 
