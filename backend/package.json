@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "mocha ./src/test/*.js --timeout 15000",
-    "coverage": "nyc --reporter=text  npm test"
+    "coverage": "nyc --reporter=text  npm test",
+    "coverage-html": "nyc --reporter=html --reporter=text  npm test"
   },
   "keywords": [],
   "author": "",
