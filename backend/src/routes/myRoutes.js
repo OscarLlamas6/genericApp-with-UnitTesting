@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
                 res.send({ message : error });
             } else if (docs == null) {
                 res.status(404);
-                res.send({ message : "crendenciales incorrectas o usuario no existe" }); 
+                res.send({ message : "crendenciales incorrectas o usuario no existe :(" }); 
             } else{ 
                 res.status(202);
                 console.log("crendenciales correctas :3")
